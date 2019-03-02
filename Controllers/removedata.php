@@ -17,4 +17,5 @@ $db = Database::getInstance();
 $rows = $db->fetchData(["collection" => "nmdh.users", "mongo_query" => ["username" => $username, "data.url" => $url], "options" => ["projection" => ["data.data"=>1]]]);
 
 $res = $db->removeData(["document" => "users","match" => ["username" => $username], "remove" => ['$pull'=>["data" => ["url" => $url]]]]);
-echo var_dump($res);
+
+header("Location: ../company/index.php");

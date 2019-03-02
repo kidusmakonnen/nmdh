@@ -7,6 +7,6 @@
 
 abstract class DataSourceStatus
 {
-    const Published = 0;
-    const Unpublished = 1;
+    const Published = 1;
+    const Unpublished = 0;
 }

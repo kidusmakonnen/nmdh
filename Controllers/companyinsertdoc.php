@@ -84,4 +84,7 @@ function cleanUpDB()
     $mng = new MongoDB\Driver\Manager("mongodb://localhost:27017");
     $mng->executeCommand('nmdh', new \MongoDB\Driver\Command(["drop" => "tmp"]));
 }
+
+header("Location: ../company/viewData.php?dataurl=$url");
+
 ?>

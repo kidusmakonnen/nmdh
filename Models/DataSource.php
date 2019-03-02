@@ -10,6 +10,7 @@ require_once "Admin.php";
 require_once "Company.php";
 require_once "Data.php";
 require_once "DataSourceStatus.php";
+require_once "Database.php";
 require_once "Developer.php";
 require_once "User.php";
 
@@ -27,6 +28,7 @@ class DataSource
     {
         $this->owner = $owner;
         $this->subscribers = [];
+        $this->status = DataSourceStatus::Unpublished;
     }
 
     /**
@@ -64,11 +66,21 @@ class DataSource
     public function publish()
     {
         $this->status = DataSourceStatus::Published;
+        $mng = new MongoDB\Driver\Manager("mongodb://localhost:27017");
+        $bulk = new MongoDB\Driver\BulkWrite();
+
+        $bulk->update(["data.url" => $this->getUrl()], ['$set'=>["data.$.published" => $this->status]]);
+        return $mng->executeBulkWrite("nmdh.users", $bulk);
     }
 
     public function unpublish()
     {
         $this->status = DataSourceStatus::Unpublished;
+        $mng = new MongoDB\Driver\Manager("mongodb://localhost:27017");
+        $bulk = new MongoDB\Driver\BulkWrite();
+
+        $bulk->update(["data.url" => $this->getUrl()], ['$set'=>["data.$.published" => $this->status]]);
+        return $mng->executeBulkWrite("nmdh.users", $bulk);
     }
 
     public function subscribe(Developer $developer)
@@ -130,6 +142,16 @@ class DataSource
         $this->description = $description;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+
+
     public function __toString()
     {
         return json_encode(array(
@@ -137,6 +159,7 @@ class DataSource
             "name" => $this->getName(),
             "description" => $this->getDescription(),
             "subscribers" => $this->subscribers,
+            "published" => $this->getStatus(),
             "data" => json_decode($this->getData(), true)
         ));
     }
