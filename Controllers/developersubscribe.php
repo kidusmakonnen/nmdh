@@ -5,19 +5,26 @@
  * Time: 1:35 PM
  */
 require_once "../Models/Developer.php";
+require_once "../helpers/subscriptionmanagement.php";
+
 
 $developer_username = $_GET["developer_username"];
 $company_username = $_GET["company_username"];
 $data_source_url = $_GET["data_source_url"];
 
-$api_key = substr(strtolower(md5(microtime().rand(1024, 9216))), 0, 28);
+if (!isUserSubscribed($developer_username, $data_source_url)) {
 
-$url = "?data=$data_source_url&key=$api_key";
+    $api_key = substr(strtolower(md5(microtime() . rand(1024, 9216))), 0, 28);
 
-$subscription_data = ["username" => $developer_username, "apiKey" => $api_key, "company_username"=>$company_username, "url" => $data_source_url];
+    $url = "?data=$data_source_url&key=$api_key";
 
-$developer = new Developer($developer_username);
+    $subscription_data = ["username" => $developer_username, "apiKey" => $api_key, "company_username" => $company_username, "url" => $data_source_url];
 
-$res = $developer->subscribe($subscription_data);
+    $developer = new Developer($developer_username);
 
-echo var_dump($res);
+    $res = $developer->subscribe($subscription_data);
+    header("Location: ../developer/");
+} else {
+    header("Location: ../developer/");
+}
+

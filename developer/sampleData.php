@@ -6,6 +6,7 @@ if (!isset($_SESSION["username"])) {
 }
 
 require_once "../Models/Database.php";
+require_once "../helpers/subscriptionmanagement.php";
 
 //if (!isset($_POST["data_url"])) {
 //    header ("Location: index.php");
@@ -15,7 +16,7 @@ $username = $_GET["company"];
 $url = $_GET["dataurl"];
 
 $db = Database::getInstance();
-$rows = $db->fetchData(["collection" => "nmdh.users", "mongo_query" => ["username" => $username, "data.url" => $url], "options" => ["projection" => ["data.data"=>1]]]);
+$rows = $db->fetchData(["collection" => "nmdh.users", "mongo_query" => ["username" => $username, "data.url" => $url], "options" => ["projection" => ["data.data" => 1]]]);
 //if (!isset($rows->toArray()[0])) {
 //    header("Location: index.php");
 //}
@@ -33,7 +34,6 @@ function extractValues($data)
     return array_values(json_decode(json_encode($data), true));
 }
 
-
 ?>
 <html lang="en">
 <head>
@@ -47,7 +47,8 @@ function extractValues($data)
     Visual Admin Template
     http://www.templatemo.com/preview/templatemo_455_visual_admin
     -->
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet'
+          type='text/css'>
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/templatemo-style.css" rel="stylesheet">
@@ -85,7 +86,8 @@ function extractValues($data)
             <ul>
                 <li><a href="index.php"><i class="fa fa-home fa-fw"></i>Dashboard</a></li>
                 <li><a href="subscriptions.php"><i class="fa fa-file fa-fw"></i>Files</a></li>
-                <li><a href="company-manage-users.html" class="active"><i class="fa fa-users fa-fw"></i>Manage Users</a></li>
+                <li><a href="company-manage-users.html" class="active"><i class="fa fa-users fa-fw"></i>Manage Users</a>
+                </li>
                 <li><a href="company-preferences.html"><i class="fa fa-sliders fa-fw"></i>Preferences</a></li>
                 <li><a href="logout.php"><i class="fa fa-eject fa-fw"></i>Sign Out</a></li>
             </ul>
@@ -135,12 +137,15 @@ function extractValues($data)
                         </tbody>
                     </table>
                 </div>
-                <?php echo "<a href='../Controllers/developersubscribe.php?data_source_url={$url}&developer_username={$_SESSION["username"]}&company_username={$username}' class='templatemo-blue-button' style='background-color: green'><strong>Subscribe</strong></a>"; ?>
-                <?php echo "<a href='../Controllers/developerunsubscribe.php?data_source_url={$url}&developer_username={$_SESSION["username"]}&company_username={$username}' class='templatemo-blue-button' style='background-color: red'><strong>Unsubscribe</strong></a>"; ?>
+                <?php
+                if (!isUserSubscribed($_SESSION["username"], $url)) {
+                    echo "<a href='../Controllers/developersubscribe.php?data_source_url={$url}&developer_username={$_SESSION["username"]}&company_username={$username}' class='templatemo-blue-button' style='background-color: green'><strong>Subscribe</strong></a>";
+                } else {
+                    echo "<a href='../Controllers/developerunsubscribe.php?data_source_url={$url}&developer_username={$_SESSION["username"]}&company_username={$username}' class='templatemo-blue-button' style='background-color: red'><strong>Unsubscribe</strong></a>";
+                }
+                ?>
 
             </div>
-
-
 
 
             <footer class="text-right">
@@ -155,7 +160,7 @@ function extractValues($data)
 <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>      <!-- jQuery -->
 <script type="text/javascript" src="js/templatemo-script.js"></script>      <!-- Templatemo Script -->
 <script>
-    $(document).ready(function(){
+    $(document).ready(function () {
         // Content widget with background image
         var imageUrl = $('img.content-bg-img').attr('src');
         $('.templatemo-content-img-bg').css('background-image', 'url(' + imageUrl + ')');

@@ -20,4 +20,4 @@ $developer = new Developer($developer_username);
 
 $res = $developer->unsubscribe($subscription_data);
 
-echo var_dump($res);
+header("Location: ../developer/");
