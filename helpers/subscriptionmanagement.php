@@ -4,6 +4,7 @@
  * Date: 3/2/19
  * Time: 1:17 PM
  */
+require_once "../Models/Database.php";
 function isUserSubscribed($user, $url)
 {
     $db = Database::getInstance();
@@ -21,4 +22,20 @@ function isUserSubscribed($user, $url)
     }
 
     return $subscribed;
+}
+
+function getApiKey($user, $url)
+{
+    $db = Database::getInstance();
+    $rows = $db->fetchData(["collection" => "nmdh.users", "mongo_query" => ["data.url" => $url], "options" => ["projection" => ["data.subscribers" => 1, "_id" => 0]]]);
+    $row = $rows->toArray()[0];
+
+    $subscribers = $row->data[0]->subscribers;//check if empty
+
+    foreach ($subscribers as $subscriber) {
+        if (!(strcmp($subscriber->username, $user))) {
+            return $subscriber->apiKey;
+        }
+    }
+    return NULL;
 }

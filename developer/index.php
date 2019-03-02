@@ -13,7 +13,26 @@ if (!isset($_SESSION["username"])) {
     $res = $db->fetchData(["collection" => "nmdh.users", "mongo_query" => ["username" => $username]])->toArray();
 
     $developer = new Developer($res[0]->username, $res[0]->password);
-    $developer->setSubscription($res[0]->subscriptions);
+    $subscription_data = $res[0]->subscriptions;
+    $data_source_list = [];
+
+    foreach ($subscription_data as $datum) {
+        $res = $db->fetchData(["collection" => "nmdh.users", "mongo_query" => ["username" => $datum->company_username,
+            "data.url" => $datum->url], "options" => ["projection" => ["_id" => 0, "company_name" => 1, "data.name" => 1,
+            "data.description" => 1]]])->toArray()[0];
+        $company = new Company($datum->company_username);
+        $company->setName($res->company_name);
+
+        $data_src = new DataSource($company);
+        $data_src->setName($res->data[0]->name);
+        $data_src->setDescription($res->data[0]->description);
+        $data_src->setUrl($datum->url);
+        $data_source_list[] = $data_src;
+    }
+//    $data_src -> setName()
+
+
+    $developer->setSubscription($data_source_list);
 
 
     $companies = [];
@@ -111,7 +130,12 @@ if (!isset($_SESSION["username"])) {
                             echo "<p>You haven't subscribed to any data source.</p>";
                         } else {
                             foreach ($subscriptions as $subscription) {
-                                echo "<div class='templatemo-flex-row flex-content-row'><div class='templatemo-content-widget blue-bg col-2'><h2 class='templatemo-inline-block'>Companies</h2><hr><p>Tech News from around the world</p></div></div>";
+                                echo "<form action='viewSubscription.php?dataurl={$subscription->getUrl()}&company={$subscription->getOwner()->getUsername()}' method='post'>";
+                                echo "<input type='hidden' name='company_name' value='{$subscription->getOwner()->getUsername()}' />";
+                                echo "<input type='hidden' name='sub_name' value='{$subscription->getName()}' />";
+                                echo "<input type='hidden' name='sub_description' value='{$subscription->getDescription()}' />";
+                                echo "<div class='templatemo-flex-row flex-content-row'><div class='templatemo-content-widget blue-bg col-2'><h2 class='templatemo-inline-block'>{$subscription->getName()}</h2><hr><p>{$subscription->getDescription()}</p><div class='form-group text-right'><a href='../Controllers/developerunsubscribe.php?data_source_url={$subscription->getUrl()}&developer_username={$_SESSION["username"]}&company_username={$subscription->getOwner()->getUsername()}' class='templatemo-blue-button' style='background-color: red'>Unsubscribe</a><button class='templatemo-white-button' type='submit'>View</button></div></div></div>";
+                                echo "</form>";
                             }
                         }
                     ?>

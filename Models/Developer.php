@@ -6,6 +6,7 @@
  */
 
 require_once "User.php";
+require_once "DataSourceManagement.php";
 
 class Developer extends User
 {
@@ -32,6 +33,7 @@ class Developer extends User
         $bulk = new MongoDB\Driver\BulkWrite();
 
         $bulk->update(["username" => $data_source["company_username"], "data.url" => $data_source["url"] ], ['$push' => ["data.$.subscribers" => $data_source]]);
+        $bulk->update(["username" => $data_source["username"]], ['$push' => ["subscriptions" => $data_source]]);
         return $mng->executeBulkWrite("nmdh.users", $bulk);
 
     }
@@ -42,7 +44,9 @@ class Developer extends User
 //        ));
         $db = Database::getInstance();
         $res = $db->removeData(["document" => "users","match" => ["username" => $data_source["company_username"], "data.url" => $data_source["url"]], "remove" => ['$pull'=>["data.$.subscribers" => ["username" => $data_source["username"]]]]]);
+        $res = $db->removeData(["document" => "users","match" => ["username" => $data_source["username"]], "remove" => ['$pull'=>["subscriptions" => ["url" => $data_source["url"]]]]]);
         echo var_dump($res);
+//        die();
     }
 
     public function __toString()
