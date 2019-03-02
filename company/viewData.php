@@ -51,6 +51,7 @@ function extractValues($data)
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/templatemo-style.css" rel="stylesheet">
+      <link href="../Includes/datatables.min.css" rel="stylesheet">
     
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -97,7 +98,7 @@ function extractValues($data)
         <div class="templatemo-content-container">
           <div class="templatemo-content-widget no-padding">
             <div class="panel panel-default table-responsive">
-              <table class="table table-striped table-bordered templatemo-user-table">
+              <table class="table table-striped table-bordered templatemo-user-table" id="sample-data">
                 <thead>
 
                   <tr>
@@ -149,12 +150,17 @@ function extractValues($data)
     <!-- JS -->
     <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>      <!-- jQuery -->
     <script type="text/javascript" src="js/templatemo-script.js"></script>      <!-- Templatemo Script -->
+    <script type="text/javascript" src="../Includes/datatables.min.js"></script>
     <script>
       $(document).ready(function(){
         // Content widget with background image
         var imageUrl = $('img.content-bg-img').attr('src');
         $('.templatemo-content-img-bg').css('background-image', 'url(' + imageUrl + ')');
         $('img.content-bg-img').hide();        
+      });
+      
+      $(document).ready(function () {
+          $('#sample-data').DataTable();
       });
     </script>
   </body>
