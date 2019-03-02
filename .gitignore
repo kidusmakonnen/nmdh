@@ -1,0 +1,5 @@
+phpunit-7.phar
+Tests/*
+uploaddoc.php
+.idea/*
+Models/notes
