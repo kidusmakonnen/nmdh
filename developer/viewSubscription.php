@@ -92,7 +92,7 @@ if (isset($_POST["company_name"])) {
                     <h4><strong>Subscription Name: </strong> <?php echo $_POST["sub_name"]; ?></h4>
                     <h4><strong>Subscription Description: </strong> <?php echo $_POST["sub_description"]; ?></h4>
                     <h4><strong>API Key: </strong> <?php echo getApiKey($_SESSION["username"], $url) ?></h4>
-                    <h4><strong>JSON Data URL: </strong> <a href="#">Link</a></h4><hr>
+                    <h4><strong>JSON Data URL: </strong> <a target="_blank" href="getdata.php?key=<?php echo getApiKey($_SESSION["username"], $url); ?>&dataurl=<?php echo $url; ?>">Link</a></h4><hr>
                     <?php echo "<a href='../Controllers/developerunsubscribe.php?data_source_url={$url}&developer_username={$_SESSION["username"]}&company_username={$username}' class='templatemo-blue-button' style='background-color: red'><strong>Unsubscribe</strong></a>";
                     ?>
                 </div>
