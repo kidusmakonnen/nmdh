@@ -15,10 +15,11 @@ $username = $_SESSION["username"];
 $url = $_GET["dataurl"];
 
 $db = Database::getInstance();
-$rows = $db->fetchData(["collection" => "nmdh.users", "mongo_query" => ["data.url" => $url], "options" => ["projection" => ["data.data" => 1, "data.published" => 1]]]);
+$rows = $db->fetchData(["collection" => "nmdh.users", "mongo_query" => ["data.url" => $url], "options" => ["projection" => ["data.name" => 1, "data.data" => 1, "data.published" => 1]]]);
 $row = $rows->toArray()[0];
 
 $published = $row->data[0]->published;
+$name = $row->data[0]->name;
 
 //die(var_dump($row->data[0]->published));
 if (!isset($row)) {
@@ -91,7 +92,7 @@ function extractValues($data)
             <ul>
                 <li><a href="index.php"><i class="fa fa-home fa-fw"></i>Dashboard</a></li>
                 <li><a href="upload.php"><i class="fa fa-file fa-fw"></i>Files</a></li>
-                <li><a href="company-manage-users.html" class="active"><i class="fa fa-users fa-fw"></i>Manage Users</a>
+                <li><a href="company-manage-users.html"><i class="fa fa-users fa-fw"></i>Manage Users</a>
                 </li>
                 <li><a href="company-preferences.html"><i class="fa fa-sliders fa-fw"></i>Preferences</a></li>
                 <li><a href="logout.php"><i class="fa fa-eject fa-fw"></i>Sign Out</a></li>
@@ -100,9 +101,15 @@ function extractValues($data)
     </div>
     <!-- Main content -->
     <div class="templatemo-content col-1 light-gray-bg">
+        <div class="templatemo-top-nav-container">
+            <h1><?php echo $name;
+                echo $published ? " <hr><h3 style='background-color: green; color: white; padding: 5px; display: inline;'><strong>Published</strong></h3>" : " <hr><h3 style='background-color: darkorange; color: white; padding: 5px; display: inline;'><strong>Unpublished</strong></h3>"; ?></h1>
+        </div>
 
         <div class="templatemo-content-container">
-            <div class="templatemo-content-widget no-padding">
+            <div class="templatemo-content-widget  white-bg col-2">
+                <h2>Data</h2>
+                <hr>
                 <div class="panel panel-default table-responsive">
                     <table class="table table-striped table-bordered templatemo-user-table" id="sample-data">
                         <thead>
@@ -113,14 +120,6 @@ function extractValues($data)
                                 echo "<td>$header</td>";
                             }
                             ?>
-                            <!--                    <td><a href="" class="white-text templatemo-sort-by"># <span class="caret"></span></a></td>-->
-                            <!--                    <td><a href="" class="white-text templatemo-sort-by">First Name <span class="caret"></span></a></td>-->
-                            <!--                    <td><a href="" class="white-text templatemo-sort-by">Last Name <span class="caret"></span></a></td>-->
-                            <!--                    <td><a href="" class="white-text templatemo-sort-by">User Name <span class="caret"></span></a></td>-->
-                            <!--                    <td><a href="" class="white-text templatemo-sort-by">Email <span class="caret"></span></a></td>-->
-                            <!--                    <td>Edit</td>-->
-                            <!--                    <td>Action</td>-->
-                            <!--                    <td>Delete</td>-->
                         </tr>
                         </thead>
                         <tbody>
