@@ -57,6 +57,7 @@ class Company extends User
             "account_status" => 0,
             "company_name" => $this->name,
             "company_description" => $this->description,
+            "data" => [],
             "user_type" => $this->getUserType()
         ));
     }

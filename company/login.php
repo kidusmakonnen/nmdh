@@ -10,7 +10,7 @@ if (isset($_POST["submit"])) {
     $res = $db->fetchData(["collection" => "nmdh.users", "mongo_query" => ["username" => $username, "password" => $password]])->toArray();
 
     if (empty($res)) {
-        echo "Wrong username or password";
+        header("Location: login.php?error");
     } else {
         session_start();
         $_SESSION['username'] = $username;
@@ -51,6 +51,13 @@ if (isset($_POST["submit"])) {
 	          <div class="square"></div>
 	          <h1>Multi Purpose Data Hosting</h1>
 	        </header>
+            <?php
+            if (isset($_GET['successSignup'])) {
+                echo "<div class='alert alert-success'><strong>Success!</strong> Account created successfully. Please login.</div>";
+            } elseif (isset($_GET['error'])) {
+                echo "<div class='alert alert-danger'><strong>Error!</strong> Wrong Username or Password.</div>";
+            }
+            ?>
 	        <form action="#" class="templatemo-login-form" method="post">
 	        	<div class="form-group">
 	        		<div class="input-group">

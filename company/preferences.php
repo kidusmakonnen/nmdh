@@ -57,12 +57,12 @@ Visual Admin Template
             <i class="fa fa-bars"></i>
           </div>
         <nav class="templatemo-left-nav">
-          <ul>
-            <li><a href="index.php"><i class="fa fa-home fa-fw"></i>Dashboard</a></li>
-            <li><a href="subscriptions.php" ><i class="fa fa-building fa-fw"></i>Subscription</a></li>
-            <li><a href="preferences.php" class="active"><i class="fa fa-sliders fa-fw"></i>Preferences</a></li>
-            <li><a href="logout.php"><i class="fa fa-eject fa-fw"></i>Sign Out</a></li>
-          </ul>
+            <ul>
+                <li><a href="index.php"><i class="fa fa-home fa-fw"></i>Dashboard</a></li>
+                <li><a href="upload.php"><i class="fa fa-file fa-fw"></i>Upload Data</a></li>
+                <li><a href="preferences.php" class="active"><i class="fa fa-sliders fa-fw"></i>Preferences</a></li>
+                <li><a href="logout.php"><i class="fa fa-eject fa-fw"></i>Sign Out</a></li>
+            </ul>
         </nav>
       </div>
       <!-- Main content -->

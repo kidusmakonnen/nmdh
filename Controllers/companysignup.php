@@ -19,7 +19,11 @@ $company = new Company($company_username, $company_password, $company_name, $com
 
 $res = AccountManagement::createUser($company);
 
-echo var_dump($res);
+if($res) {
+    header("Location: ../company/login.php?successSignup");
+} else {
+    header("Location: ../company/signup.php?errorSignup");
+}
 
 
 

@@ -57,7 +57,6 @@ if (!isset($_SESSION["username"])) {
             <ul>
                 <li><a href="index.php"><i class="fa fa-home fa-fw"></i>Dashboard</a></li>
                 <li><a href="upload.php" class="active"><i class="fa fa-file fa-fw"></i>Upload Data</a></li>
-                <li><a href="manageusers.php"><i class="fa fa-users fa-fw"></i>Manage Users</a></li>
                 <li><a href="preferences.php"><i class="fa fa-sliders fa-fw"></i>Preferences</a></li>
                 <li><a href="logout.php"><i class="fa fa-eject fa-fw"></i>Sign Out</a></li>
             </ul>
