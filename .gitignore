@@ -3,3 +3,4 @@ Tests/*
 uploaddoc.php
 .idea/*
 Models/notes
+Controllers/readtest.php

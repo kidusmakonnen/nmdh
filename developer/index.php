@@ -87,17 +87,17 @@ if (!isset($_SESSION["username"])) {
 <div class="templatemo-flex-row">
     <div class="templatemo-sidebar">
         <header class="templatemo-site-header">
-            <h1>Multi Purpose Data Hosting</h1>
+            <h1>National Multipurpose Data Hosting</h1>
         </header>
         <div class="profile-photo-container">
             <img src="images/profile-photo.jpg" alt="Profile Photo" class="img-responsive">
             <div class="profile-photo-overlay"></div>
         </div>
         <!-- Search box -->
-        <form class="templatemo-search-form" role="search">
+        <form class="templatemo-search-form" action="searchresult.php" method="get">
             <div class="input-group">
                 <button type="submit" class="fa fa-search"></button>
-                <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+                <input type="text" class="form-control" placeholder="Search" name="term">
             </div>
         </form>
         <div class="mobile-menu-icon">
@@ -154,7 +154,7 @@ if (!isset($_SESSION["username"])) {
                         echo "<div class='templatemo-flex-row flex-content-row'><div class='templatemo-content-widget blue-bg col-2'><h2 class='templatemo-inline-block'>{$company->getName()} ({$company->getDescription()}) </h2>";
                         foreach ($data_sources as $data_source) {
                             echo "<div class='col-1'>";
-                            echo "<div class='templatemo-flex-row flex-content-row'><div class='templatemo-content-widget blue-bg col-2'><h2 class='templatemo-inline-block'>{$data_source->getName()}</h2><hr><p>{$data_source->getDescription()}</p><div class='form-group text-right'><button type='submit' class='templatemo-blue-button'>Subscribe</button><a href='sampleData.php?dataurl={$data_source->getUrl()}&company={$data_source->getOwner()->getUsername()}' class='templatemo-white-button'>Get Sample Data</a></div></div></div>";
+                            echo "<div class='templatemo-flex-row flex-content-row'><div class='templatemo-content-widget blue-bg col-2'><h2 class='templatemo-inline-block'>{$data_source->getName()}</h2><hr><p>{$data_source->getDescription()}</p><hr><div class='form-group text-right'><a href='sampleData.php?dataurl={$data_source->getUrl()}&company={$data_source->getOwner()->getUsername()}' class='templatemo-white-button'>View</a></div></div></div>";
                             echo "</div>";
                         }
                         echo "</div></div>";
