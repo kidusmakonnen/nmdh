@@ -13,9 +13,10 @@ if (!isset($_SESSION["username"])) {
     $password = $_POST["password"];
     $new_password = $_POST["newPassword"];
     $new_password2 = $_POST["newPassword2"];
+    $ref = $_SERVER['HTTP_REFERER'];
 
     if ($new_password !== $new_password2) {
-        header("Location: ../developer/preferences.php?matchError");
+        header("Location: $ref?matchError");
         return;
     }
 
@@ -26,8 +27,8 @@ if (!isset($_SESSION["username"])) {
 
         AccountManagement::updateUser($user);
 
-        header("Location: ../developer/preferences.php?success");
+        header("Location: $ref?success");
     } else {
-        header("Location: ../developer/preferences.php?error");
+        header("Location: $ref?error");
     }
 }
