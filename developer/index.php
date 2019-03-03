@@ -19,15 +19,17 @@ if (!isset($_SESSION["username"])) {
     foreach ($subscription_data as $datum) {
         $res = $db->fetchData(["collection" => "nmdh.users", "mongo_query" => ["username" => $datum->company_username,
             "data.url" => $datum->url], "options" => ["projection" => ["_id" => 0, "company_name" => 1, "data.name" => 1,
-            "data.description" => 1]]])->toArray()[0];
-        $company = new Company($datum->company_username);
-        $company->setName($res->company_name);
+            "data.description" => 1, "data.published"=>1]]])->toArray()[0];
+            if($res->data[0]->published) {
+                $company = new Company($datum->company_username);
+                $company->setName($res->company_name);
 
-        $data_src = new DataSource($company);
-        $data_src->setName($res->data[0]->name);
-        $data_src->setDescription($res->data[0]->description);
-        $data_src->setUrl($datum->url);
-        $data_source_list[] = $data_src;
+                $data_src = new DataSource($company);
+                $data_src->setName($res->data[0]->name);
+                $data_src->setDescription($res->data[0]->description);
+                $data_src->setUrl($datum->url);
+                $data_source_list[] = $data_src;
+            }
     }
 
 
@@ -42,15 +44,18 @@ if (!isset($_SESSION["username"])) {
         $company = new Company($r->username, NULL, $r->company_name, $r->company_description);
         $data_sources = [];
         foreach ($r->data as $datum) {
-            $data_source = new DataSource($company);
-            $data_source->setName($datum->name);
-            $data_source->setDescription($datum->description);
-            $data_source->setUrl($datum->url);
-            $data_sources[] = $data_source;
+            if ($datum->published) {
+                $data_source = new DataSource($company);
+                $data_source->setName($datum->name);
+                $data_source->setDescription($datum->description);
+                $data_source->setUrl($datum->url);
+                $data_sources[] = $data_source;
+            }
         }
-
-        $company->setDataSources($data_sources);
-        $companies[] = $company;
+        if (!empty($data_sources)) {
+            $company->setDataSources($data_sources);
+            $companies[] = $company;
+        }
     }
 }
 ?>

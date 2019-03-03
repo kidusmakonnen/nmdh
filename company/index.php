@@ -81,9 +81,9 @@ if (!isset($_SESSION["username"])) {
         <nav class="templatemo-left-nav">
             <ul>
                 <li><a href="index.php" class="active"><i class="fa fa-home fa-fw"></i>Dashboard</a></li>
-                <li><a href="upload.php"><i class="fa fa-file fa-fw"></i>Files</a></li>
-                <li><a href="company-manage-users.html"><i class="fa fa-users fa-fw"></i>Manage Users</a></li>
-                <li><a href="company-preferences.html"><i class="fa fa-sliders fa-fw"></i>Preferences</a></li>
+                <li><a href="upload.php"><i class="fa fa-file fa-fw"></i>Upload Data</a></li>
+                <li><a href="manageusers.php"><i class="fa fa-users fa-fw"></i>Manage Users</a></li>
+                <li><a href="preferences.php"><i class="fa fa-sliders fa-fw"></i>Preferences</a></li>
                 <li><a href="logout.php"><i class="fa fa-eject fa-fw"></i>Sign Out</a></li>
             </ul>
         </nav>
@@ -127,8 +127,7 @@ if (!isset($_SESSION["username"])) {
             </div>
 
             <footer class="text-right">
-                <p>Copyright &copy; 2084 Company Name
-                    | Designed by <a href="http://www.templatemo.com" target="_parent">templatemo</a></p>
+                <p>Copyright &copy; 2019 NMDH</p>
             </footer>
         </div>
     </div>

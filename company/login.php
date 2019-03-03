@@ -15,7 +15,7 @@ if (isset($_POST["submit"])) {
         session_start();
         $_SESSION['username'] = $username;
         $_SESSION['usertype'] = 1;
-        header("Location: upload.php");
+        header("Location: index.php");
     };
 
     die();
@@ -76,7 +76,7 @@ if (isset($_POST["submit"])) {
 	        </form>
 		</div>
 		<div class="templatemo-content-widget templatemo-login-widget templatemo-register-widget white-bg">
-			<p>Not a registered user yet? <strong><a href="developer_signup.html" class="blue-text">Sign up now!</a></strong></p>
+			<p>Not a registered user yet? <strong><a href="signup.php" class="blue-text">Sign up now!</a></strong></p>
 		</div>
 	</body>
 </html>

@@ -80,7 +80,7 @@
 
 
 		<div class="templatemo-content-widget templatemo-login-widget templatemo-register-widget white-bg">
-			<p>Already have an Account? <strong><a href="company_signIn.html" class="blue-text">Sign In</a></strong></p>
+			<p>Already have an Account? <strong><a href="login.php" class="blue-text">Sign In</a></strong></p>
 		</div>
 	</body>
 </html>
