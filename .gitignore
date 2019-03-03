@@ -4,3 +4,4 @@ uploaddoc.php
 .idea/*
 Models/notes
 Controllers/readtest.php
+Models/Database2.php

@@ -1,4 +1,39 @@
 <!DOCTYPE html>
+<?php
+session_start();
+if (!isset($_SESSION["username"])) {
+    header("Location: login.php");
+} else {
+    require_once "../Models/Database.php";
+    require_once "../Models/Developer.php";
+    require_once "../Models/Company.php";
+    $db = Database::getInstance();
+    $username = $_SESSION["username"];
+    $res = $db->fetchData(["collection" => "nmdh.users", "mongo_query" => ["username" => $username]])->toArray();
+
+    $developer = new Developer($res[0]->username, $res[0]->password);
+    $subscription_data = $res[0]->subscriptions;
+    $data_source_list = [];
+
+    foreach ($subscription_data as $datum) {
+        $res = $db->fetchData(["collection" => "nmdh.users", "mongo_query" => ["username" => $datum->company_username,
+            "data.url" => $datum->url], "options" => ["projection" => ["_id" => 0, "company_name" => 1, "data.name" => 1,
+            "data.description" => 1]]])->toArray()[0];
+        $company = new Company($datum->company_username);
+        $company->setName($res->company_name);
+
+        $data_src = new DataSource($company);
+        $data_src->setName($res->data[0]->name);
+        $data_src->setDescription($res->data[0]->description);
+        $data_src->setUrl($datum->url);
+        $data_source_list[] = $data_src;
+    }
+
+
+    $developer->setSubscription($data_source_list);
+}
+?>
+?>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -38,80 +73,60 @@
           <div class="profile-photo-overlay"></div>
         </div>      
         <!-- Search box -->
-        <form class="templatemo-search-form" role="search">
-          <div class="input-group">
-              <button type="submit" class="fa fa-search"></button>
-              <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">           
-          </div>
-        </form>
+          <form class="templatemo-search-form" action="searchresult.php" method="get">
+              <div class="input-group">
+                  <button type="submit" class="fa fa-search"></button>
+                  <input type="text" class="form-control" placeholder="Search" name="term">
+              </div>
+          </form>
         <div class="mobile-menu-icon">
             <i class="fa fa-bars"></i>
           </div>
         <nav class="templatemo-left-nav">          
           <ul>
             <li><a href="index.php"><i class="fa fa-home fa-fw"></i>Dashboard</a></li>
-            <li><a href="developer_home.html"><i class="fa fa-database fa-fw"></i>Data Visualization</a></li>
             <li><a href="subscriptions.php" class="active"><i class="fa fa-building fa-fw"></i>Subscription</a></li>
-            <li><a href="developer_prefs.html"><i class="fa fa-sliders fa-fw"></i>Preferences</a></li>
+            <li><a href="preferences.php"><i class="fa fa-sliders fa-fw"></i>Preferences</a></li>
             <li><a href="login.php"><i class="fa fa-eject fa-fw"></i>Sign Out</a></li>
           </ul>  
         </nav>
       </div>
       <!-- Main content --> 
       <div class="templatemo-content col-1 light-gray-bg">
-        
+          <div class="templatemo-top-nav-container">
+              <h1>Subscriptions</h1>
+          </div>
         <div class="templatemo-content-container">
-          <div class="templatemo-content-widget white-bg">
-            <h2 class="margin-bottom-10">Subscriptions</h2>
+            <div class="templatemo-flex-row flex-content-row">
+                <div class="templatemo-content-widget white-bg col-2">
+                    <h2 class="templatemo-inline-block">Subscriptions</h2>
+                    <hr>
+                    <?php
+                    $subscriptions = $developer->getSubscription();
+
+                    if (empty($subscriptions)) {
+                        echo "<p>You haven't subscribed to any data source.</p>";
+                    } else {
+                        foreach ($subscriptions as $subscription) {
+                            echo "<form action='viewSubscription.php?dataurl={$subscription->getUrl()}&company={$subscription->getOwner()->getUsername()}' method='post'>";
+                            echo "<input type='hidden' name='company_name' value='{$subscription->getOwner()->getUsername()}' />";
+                            echo "<input type='hidden' name='sub_name' value='{$subscription->getName()}' />";
+                            echo "<input type='hidden' name='sub_description' value='{$subscription->getDescription()}' />";
+                            echo "<div class='templatemo-flex-row flex-content-row'><div class='templatemo-content-widget blue-bg col-2'><h2 class='templatemo-inline-block'>{$subscription->getName()}</h2><hr><p>{$subscription->getDescription()}</p><div class='form-group text-right'><a href='../Controllers/developerunsubscribe.php?data_source_url={$subscription->getUrl()}&developer_username={$_SESSION["username"]}&company_username={$subscription->getOwner()->getUsername()}' class='templatemo-blue-button' style='background-color: red'>Unsubscribe</a><button class='templatemo-white-button' type='submit'>View</button></div></div></div>";
+                            echo "</form>";
+                        }
+                    }
+                    ?>
+
+                </div>
+            </div>
           </div>
-          
-
-
-
-          <!--company user has subscribed to -->
-
-          <div class="templatemo-flex-row flex-content-row">
-            <div class="col-1">              
-              <div class="panel panel-default margin-10">
-                <div class="panel-heading"><h2>Company Name 1</h2></div>
-                <div class="text-center">Company Description Here</div>               
-              </div>
-            </div> 
-             <div class="col-1">              
-              <div class="panel panel-default margin-10">
-                <div class="panel-heading"><h2>Company Name 2</h2></div>
-                <div class="text-center">Company Description</div>               
-              </div>
-            </div>                                  
-          </div>  
-
-
-
-          <div class="templatemo-content-widget white-bg">
-            <h2 class="margin-bottom-10">Suggested APIs</h2>
-          </div>
-          <div class="templatemo-flex-row flex-content-row">
-            <div class="col-1">              
-              <div class="panel panel-default margin-10">
-                <div class="panel-heading"><h2>Company Name 1</h2></div>
-                <div class="text-center">Company Description Here</div>
-                <div class="text-center">Company Description Here</div>               
-              </div>
-            </div> 
-             <div class="col-1">              
-              <div class="panel panel-default margin-10">
-                <div class="panel-heading"><h2>Company Name 2</h2></div>
-                <div class="text-center">Company Description</div>               
-              </div>
-            </div>                                  
-          </div>  
 
 
 
           <footer class="text-right">
-            <p>Copyright &copy; 2084 Company Name 
-            | Designed by <a href="http://www.templatemo.com" target="_parent">templatemo</a></p>
-          </footer>         
+              <p>Copyright &copy; 2019 NMDH</p>
+          </footer>
         </div>
       </div>
     </div>

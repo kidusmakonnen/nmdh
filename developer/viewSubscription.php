@@ -61,10 +61,10 @@ if (isset($_POST["company_name"])) {
             <div class="profile-photo-overlay"></div>
         </div>
         <!-- Search box -->
-        <form class="templatemo-search-form" role="search">
+        <form class="templatemo-search-form" action="searchresult.php" method="get">
             <div class="input-group">
                 <button type="submit" class="fa fa-search"></button>
-                <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+                <input type="text" class="form-control" placeholder="Search" name="term">
             </div>
         </form>
         <div class="mobile-menu-icon">
@@ -74,9 +74,7 @@ if (isset($_POST["company_name"])) {
             <ul>
                 <li><a href="index.php"><i class="fa fa-home fa-fw"></i>Dashboard</a></li>
                 <li><a href="subscriptions.php"><i class="fa fa-file fa-fw"></i>Files</a></li>
-                <li><a href="company-manage-users.html" class="active"><i class="fa fa-users fa-fw"></i>Manage Users</a>
-                </li>
-                <li><a href="company-preferences.html"><i class="fa fa-sliders fa-fw"></i>Preferences</a></li>
+                <li><a href="preferences.php"><i class="fa fa-sliders fa-fw"></i>Preferences</a></li>
                 <li><a href="logout.php"><i class="fa fa-eject fa-fw"></i>Sign Out</a></li>
             </ul>
         </nav>
@@ -101,8 +99,7 @@ if (isset($_POST["company_name"])) {
 
 
             <footer class="text-right">
-                <p>Copyright &copy; 2084 Company Name
-                    | Designed by <a href="http://www.templatemo.com" target="_parent">templatemo</a></p>
+                <p>Copyright &copy; 2019 NMDH</p>
             </footer>
         </div>
     </div>

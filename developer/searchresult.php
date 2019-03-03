@@ -67,10 +67,9 @@ if (!isset($_SESSION["username"])) {
         </div>
         <nav class="templatemo-left-nav">
             <ul>
-                <li><a href="developer_index.html" class="active"><i class="fa fa-home fa-fw"></i>Dashboard</a></li>
-                <li><a href="developer_home.html"><i class="fa fa-database fa-fw"></i>Data Visualization</a></li>
+                <li><a href="index.php" class="active"><i class="fa fa-home fa-fw"></i>Dashboard</a></li>
                 <li><a href="subscriptions.php"><i class="fa fa-building fa-fw"></i>Subscription</a></li>
-                <li><a href="developer_prefs.html"><i class="fa fa-sliders fa-fw"></i>Preferences</a></li>
+                <li><a href="preferences.php"><i class="fa fa-sliders fa-fw"></i>Preferences</a></li>
                 <li><a href="logout.php"><i class="fa fa-eject fa-fw"></i>Sign Out</a></li>
             </ul>
         </nav>
@@ -114,8 +113,7 @@ if (!isset($_SESSION["username"])) {
 
 
             <footer class="text-right">
-                <p>Copyright &copy; 2084 Company Name
-                    | Designed by <a href="http://www.templatemo.com" target="_parent">templatemo</a></p>
+                <p>Copyright &copy; 2019 NMDH</p>
             </footer>
         </div>
     </div>

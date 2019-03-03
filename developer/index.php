@@ -29,7 +29,6 @@ if (!isset($_SESSION["username"])) {
         $data_src->setUrl($datum->url);
         $data_source_list[] = $data_src;
     }
-//    $data_src -> setName()
 
 
     $developer->setSubscription($data_source_list);
@@ -40,7 +39,6 @@ if (!isset($_SESSION["username"])) {
     $res = $db->fetchData(["collection" => "nmdh.users", "mongo_query" => ["user_type" => 1], "options" => ["projection" => ["_id" => 0, "data.data"=>0]]]);
 
     foreach ($res as $r) {
-//        die(var_dump(($r->data[0]->name)));
         $company = new Company($r->username, NULL, $r->company_name, $r->company_description);
         $data_sources = [];
         foreach ($r->data as $datum) {
@@ -105,10 +103,9 @@ if (!isset($_SESSION["username"])) {
         </div>
         <nav class="templatemo-left-nav">
             <ul>
-                <li><a href="developer_index.html" class="active"><i class="fa fa-home fa-fw"></i>Dashboard</a></li>
-                <li><a href="developer_home.html"><i class="fa fa-database fa-fw"></i>Data Visualization</a></li>
+                <li><a href="index.php" class="active"><i class="fa fa-home fa-fw"></i>Dashboard</a></li>
                 <li><a href="subscriptions.php"><i class="fa fa-building fa-fw"></i>Subscription</a></li>
-                <li><a href="developer_prefs.html"><i class="fa fa-sliders fa-fw"></i>Preferences</a></li>
+                <li><a href="preferences.php"><i class="fa fa-sliders fa-fw"></i>Preferences</a></li>
                 <li><a href="logout.php"><i class="fa fa-eject fa-fw"></i>Sign Out</a></li>
             </ul>
         </nav>
@@ -166,8 +163,7 @@ if (!isset($_SESSION["username"])) {
             </div>
 
             <footer class="text-right">
-                <p>Copyright &copy; 2084 Company Name
-                    | Designed by <a href="http://www.templatemo.com" target="_parent">templatemo</a></p>
+                <p>Copyright &copy; 2019 NMDH</p>
             </footer>
         </div>
     </div>
