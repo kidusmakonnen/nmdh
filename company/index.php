@@ -13,7 +13,6 @@ if (!isset($_SESSION["username"])) {
     $res = $db->fetchData(["collection" => "nmdh.users", "mongo_query" => ["username" => $username], "options" => ["projection" => ["_id" => 0, "data.data" => 0]]]);
 
     foreach ($res as $r) {
-//        die(var_dump(($r->data[0]->name)));
         $company = new Company($r->username, NULL, $r->company_name, $r->company_description);
         $data_sources = [];
         foreach ($r->data as $datum) {
@@ -23,12 +22,9 @@ if (!isset($_SESSION["username"])) {
             $data_source->setUrl($datum->url);
             $data_sources[] = $data_source;
         }
-
         $company->setDataSources($data_sources);
         $companies[] = $company;
-
     }
-
     $company = $companies[0];
 }
 ?>

@@ -31,15 +31,9 @@ if (!isset($_SESSION["username"])) {
                 $data_source_list[] = $data_src;
             }
     }
-
-
     $developer->setSubscription($data_source_list);
-
-
     $companies = [];
-
     $res = $db->fetchData(["collection" => "nmdh.users", "mongo_query" => ["user_type" => 1], "options" => ["projection" => ["_id" => 0, "data.data"=>0]]]);
-
     foreach ($res as $r) {
         $company = new Company($r->username, NULL, $r->company_name, $r->company_description);
         $data_sources = [];
@@ -64,7 +58,7 @@ if (!isset($_SESSION["username"])) {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Multi Purpose Data Hosting</title>
+    <title>National Multipurpose Data Hosting</title>
     <meta name="description" content="">
     <meta name="author" content="templatemo">
     <!-- 

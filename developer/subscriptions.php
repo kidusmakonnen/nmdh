@@ -28,8 +28,6 @@ if (!isset($_SESSION["username"])) {
         $data_src->setUrl($datum->url);
         $data_source_list[] = $data_src;
     }
-
-
     $developer->setSubscription($data_source_list);
 }
 ?>
@@ -103,7 +101,6 @@ if (!isset($_SESSION["username"])) {
                     <hr>
                     <?php
                     $subscriptions = $developer->getSubscription();
-
                     if (empty($subscriptions)) {
                         echo "<p>You haven't subscribed to any data source.</p>";
                     } else {
@@ -117,7 +114,6 @@ if (!isset($_SESSION["username"])) {
                         }
                     }
                     ?>
-
                 </div>
             </div>
           </div>

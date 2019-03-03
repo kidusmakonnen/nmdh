@@ -40,7 +40,7 @@ Visual Admin Template
     <div class="templatemo-flex-row">
       <div class="templatemo-sidebar">
         <header class="templatemo-site-header">
-          <h1>Multi Purpose Data Hosting</h1>
+          <h1>National Multipurpose Data Hosting</h1>
         </header>
         <div class="profile-photo-container">
           <img src="images/profile-photo.jpg" alt="Profile Photo" class="img-responsive">

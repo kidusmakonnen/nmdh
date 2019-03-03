@@ -14,4 +14,8 @@ $developer = new Developer($developer_username, $developer_password);
 
 $res = AccountManagement::createUser($developer);
 
-echo var_dump($res);
+if($res) {
+    header("Location: ../developer/login.php?successSignup");
+} else {
+    header("Location: ../developer/signup.php?errorSignup");
+}

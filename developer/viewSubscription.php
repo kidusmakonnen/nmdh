@@ -8,10 +8,6 @@ if (!isset($_SESSION["username"])) {
 require_once "../Models/Database.php";
 require_once "../helpers/subscriptionmanagement.php";
 
-//if (!isset($_POST["data_url"])) {
-//    header ("Location: index.php");
-//}
-
 $username = $_GET["company"];
 $url = $_GET["dataurl"];
 

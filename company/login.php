@@ -16,12 +16,10 @@ if (isset($_POST["submit"])) {
     if (empty($res)) {
         header("Location: login.php?error");
     } else {
-//        session_start();
         $_SESSION['username'] = $username;
         $_SESSION['usertype'] = 1;
         header("Location: index.php");
     };
-
     die();
 }
 ?>

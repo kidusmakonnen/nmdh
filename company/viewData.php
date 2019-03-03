@@ -7,10 +7,6 @@ if (!isset($_SESSION["username"])) {
 
 require_once "../Models/Database.php";
 
-//if (!isset($_POST["data_url"])) {
-//    header ("Location: index.php");
-//}
-
 $username = $_SESSION["username"];
 $url = $_GET["dataurl"];
 
@@ -21,7 +17,6 @@ $row = $rows->toArray()[0];
 $published = $row->data[0]->published;
 $name = $row->data[0]->name;
 
-//die(var_dump($row->data[0]->published));
 if (!isset($row)) {
     header("Location: index.php");
 }
@@ -72,7 +67,7 @@ function extractValues($data)
 <div class="templatemo-flex-row">
     <div class="templatemo-sidebar">
         <header class="templatemo-site-header">
-            <h1>Multi Purpose Data Hosting</h1>
+            <h1>National Multipurpose Data Hosting</h1>
         </header>
         <div class="profile-photo-container">
             <img src="images/profile-photo.jpg" alt="Profile Photo" class="img-responsive">

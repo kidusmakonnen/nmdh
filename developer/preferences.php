@@ -15,7 +15,7 @@ if (!isset($_SESSION["username"])) {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Multi Purpose Data Hosting</title>
+    <title>National Multipurpose Data Hosting</title>
     <meta name="description" content="">
     <meta name="author" content="templatemo">
     <!--

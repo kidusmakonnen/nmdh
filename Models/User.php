@@ -45,9 +45,6 @@ class User
     {
             $this->username = $username;
             $this->password = $password;
-
-
-//        AccountManagement::createUser($this);
     }
 
     /**

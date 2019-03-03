@@ -13,7 +13,6 @@ class Database
 
     private function __construct()
     {
-        //db connection stuff
         $db_host = "localhost";
         static::$mng = new MongoDB\Driver\Manager("mongodb://$db_host:27017");
     }
@@ -27,7 +26,6 @@ class Database
         return static::$instance;
     }
 
-    //consider moving to a different class
     public function fetchData($query)
     {
         $collection = $query["collection"];
@@ -38,7 +36,6 @@ class Database
 
     }
 
-    //consider moving to a different class
     public function storeData($query)
     {
         try {

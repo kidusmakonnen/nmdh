@@ -4,25 +4,16 @@ session_start();
 if (!isset($_SESSION["username"])) {
     header("Location: login.php");
 }
-
 require_once "../Models/Database.php";
 require_once "../helpers/subscriptionmanagement.php";
-
-//if (!isset($_POST["data_url"])) {
-//    header ("Location: index.php");
-//}
 
 $username = $_GET["company"];
 $url = $_GET["dataurl"];
 
 $db = Database::getInstance();
 $rows = $db->fetchData(["collection" => "nmdh.users", "mongo_query" => ["username" => $username, "data.url" => $url], "options" => ["projection" => ["data.data" => 1]]]);
-//if (!isset($rows->toArray()[0])) {
-//    header("Location: index.php");
-//}
 $row = $rows->toArray()[0];
 $headers = extractHeader($row->data[0]->data[0]);
-
 
 function extractHeader($data)
 {
@@ -107,14 +98,6 @@ function extractValues($data)
                                 echo "<td>$header</td>";
                             }
                             ?>
-                            <!--                    <td><a href="" class="white-text templatemo-sort-by"># <span class="caret"></span></a></td>-->
-                            <!--                    <td><a href="" class="white-text templatemo-sort-by">First Name <span class="caret"></span></a></td>-->
-                            <!--                    <td><a href="" class="white-text templatemo-sort-by">Last Name <span class="caret"></span></a></td>-->
-                            <!--                    <td><a href="" class="white-text templatemo-sort-by">User Name <span class="caret"></span></a></td>-->
-                            <!--                    <td><a href="" class="white-text templatemo-sort-by">Email <span class="caret"></span></a></td>-->
-                            <!--                    <td>Edit</td>-->
-                            <!--                    <td>Action</td>-->
-                            <!--                    <td>Delete</td>-->
                         </tr>
                         </thead>
                         <tbody>

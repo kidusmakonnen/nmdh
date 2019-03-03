@@ -7,12 +7,9 @@ if (isset($_SESSION["username"])) {
 require_once "../Models/Database.php";
 if (isset($_POST["submit"])) {
     $db = Database::getInstance();
-
     $username = $_POST["username"];
     $password = $_POST["password"];
-
     $res = $db->fetchData(["collection" => "nmdh.users", "mongo_query" => ["username" => $username, "password" => $password]])->toArray();
-
     if (empty($res)) {
         echo "Wrong username or password";
     } else {
@@ -20,7 +17,6 @@ if (isset($_POST["submit"])) {
         $_SESSION['usertype'] = 2;
         header("Location: index.php");
     };
-
     die();
 }
 ?>
@@ -54,6 +50,13 @@ if (isset($_POST["submit"])) {
 	          <h1>Multi Purpose Data Hosting</h1>
                 <h3>(Developer Login)</h3>
 	        </header>
+            <?php
+            if (isset($_GET['successSignup'])) {
+                echo "<div class='alert alert-success'><strong>Success!</strong> Account created successfully. Please login.</div>";
+            } elseif (isset($_GET['error'])) {
+                echo "<div class='alert alert-danger'><strong>Error!</strong> Wrong Username or Password.</div>";
+            }
+            ?>
 	        <form action="#" class="templatemo-login-form" method="post">
 	        	<div class="form-group">
 	        		<div class="input-group">

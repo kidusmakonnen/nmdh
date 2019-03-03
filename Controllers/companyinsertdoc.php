@@ -12,7 +12,6 @@ if (!isset($_SESSION["username"])) {
     header("Location: login.php");
 }
 
-//$company_username = "federalreserve";
 $db = Database::getInstance();
 if(isset($_POST["submit"]))
 {
@@ -50,14 +49,6 @@ if(isset($_POST["submit"]))
 
         DataSourceManagement::addDataSource($data_source);
         cleanUpDB();
-
-
-//        $bulk = new MongoDB\Driver\BulkWrite();
-//
-//        $bulk->update(["username" => $company_username], ['$push'=>["data" => ["asdfooh" => "Madfsd"]]]);
-//        $mng->executeBulkWrite("nmdh.users", $bulk);
-
-
 
     }
     else{
