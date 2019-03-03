@@ -46,13 +46,7 @@ Visual Admin Template
           <img src="images/profile-photo.jpg" alt="Profile Photo" class="img-responsive">
           <div class="profile-photo-overlay"></div>
         </div>
-        <!-- Search box -->
-          <form class="templatemo-search-form" action="searchresult.php" method="get">
-              <div class="input-group">
-                  <button type="submit" class="fa fa-search"></button>
-                  <input type="text" class="form-control" placeholder="Search" name="term">
-              </div>
-          </form>
+
         <div class="mobile-menu-icon">
             <i class="fa fa-bars"></i>
           </div>

@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <?php
 require_once "../Models/Database.php";
+session_start();
+if (isset($_SESSION["username"])) {
+    header("Location: index.php");
+}
 if (isset($_POST["submit"])) {
     $db = Database::getInstance();
 
@@ -12,7 +16,7 @@ if (isset($_POST["submit"])) {
     if (empty($res)) {
         header("Location: login.php?error");
     } else {
-        session_start();
+//        session_start();
         $_SESSION['username'] = $username;
         $_SESSION['usertype'] = 1;
         header("Location: index.php");
