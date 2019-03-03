@@ -43,10 +43,9 @@ class User
 
     function __construct($username, $password)
     {
-        if (AccountManagement::usernameUnique($username)) {
             $this->username = $username;
             $this->password = $password;
-        }
+
 
 //        AccountManagement::createUser($this);
     }
@@ -77,7 +76,7 @@ class User
 
     public function validatePassowrd($password)
     {
-        return AccountManagement::passwordValid($password);
+        return AccountManagement::passwordValid($this->username, $password);
     }
 
     /**

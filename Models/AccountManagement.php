@@ -9,7 +9,6 @@ require_once "Admin.php";
 require_once "Company.php";
 require_once "Data.php";
 require_once "Database.php";
-require_once "Database2.php";//FOR TESTING ONLY !!!
 require_once "DataSource.php";
 require_once "DataSourceManagement.php";
 require_once "DataSourceStatus.php";
@@ -19,13 +18,16 @@ class AccountManagement
 {
     public static function usernameUnique($username)
     {
-        return true;//TODO: for test purposes only! REMOVE
-        //return boolean
+        $db = Database::getInstance();
+        $res = $db->fetchData(["collection" => "nmdh.users", "mongo_query" => ["username" => $username]])->toArray();
+        return empty($res);
     }
 
-    public static function passwordValid($password)
+    public static function passwordValid($username, $password)
     {
-        //return boolean
+        $db = Database::getInstance();
+        $res = $db->fetchData(["collection" => "nmdh.users", "mongo_query" => ["username" => $username, "password" => $password]])->toArray();
+        return (!empty($res));
     }
 
     public static function createUser(User $user)
@@ -34,17 +36,18 @@ class AccountManagement
         $collection = "users";
         $document = $user->__toString();
         return $db->storeData(array("collection" => $collection, "document" => $document));
-//        return Database2::storeData(array("collection" => $collection, "document" => $document));
-
     }
 
     public static function updateUser(User $user)
     {
-        //TODO: add code to update user info to db
+        $mng = new MongoDB\Driver\Manager("mongodb://localhost:27017");
+        $bulk = new MongoDB\Driver\BulkWrite();
+        $bulk->update(["username" => $user->getUsername()], ['$set' => ["password" => $user->getPassword()]]);
+        return $mng->executeBulkWrite("nmdh.users", $bulk);
     }
 
     public static function getUser($id): User
     {
-        //TODO: make use of Database class to get the user by id
+        return new User($id, NULL);
     }
 }
