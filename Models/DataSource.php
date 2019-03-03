@@ -150,6 +150,14 @@ class DataSource
         return $this->status;
     }
 
+    /**
+     * @return array
+     */
+    public function getSubscribers(): array
+    {
+        return $this->subscribers;
+    }
+
 
 
     public function __toString()

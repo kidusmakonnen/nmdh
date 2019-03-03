@@ -40,7 +40,13 @@ class Company extends User
 
     public function getUsageStatistics()
     {
-        //return stats
+        $subscribers = 0;
+        foreach ($this->data_sources as $data_source) {
+            $subscribers += count($data_source->getSubscribers());
+        }
+        return json_encode(array(
+            "subscribers" => $subscribers
+        ));
     }
 
     public function __toString()
